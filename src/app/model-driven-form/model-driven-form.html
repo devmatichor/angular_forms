@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="container">
+    <div class="row">
+      <h1>Reactive form</h1>
+    </div>
+    <form id="form" [formGroup]="rFormGroup" novalidate (ngSubmit)="onSubmit(rFormGroup)">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="exampleInputName">Name</label>
+          <input type="text" class="form-control" id="exampleInputName" placeholder="Name" formControlName="name" name="name">
+          <small class="text-danger" [hidden]="(rFormGroup.controls['name'] && rFormGroup.controls['name'].valid) || rFormGroup.controls['name']?.pristine">Filed require</small>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="exampleInputEmail">Email address</label>
+          <input type="text" class="form-control" id="exampleInputEmail" placeholder="Enter email" formControlName="email">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label for="exampleInputAccountNo">Account No.</label>
+          <input type="text" class="form-control" id="exampleInputAccountNo" placeholder="Account No" formControlName="accountNo">
+          <small class="text-danger" [hidden]="(rFormGroup.controls['accountNo'] && rFormGroup.controls['accountNo'].valid) || rFormGroup.controls['accountNo']?.pristine">Incorrect account number</small>
+        </div>
+      </div>
+      <div class="form-group" formArrayName="attributes">
+        <div [formGroupName]="i" *ngFor="let skill of rFormGroup.get('attributes').controls; let i = index;" class="separate-section">
+          <hr>
+          <label for="sk">Skill</label>
+          <input formControlName="skill" placeholder="Skill description" class="form-control" id="sk" required>
+          <small class="text-danger" [hidden]="(skill && skill.valid) || skill.pristine">Filed require</small>
+        </div>
+      </div>
+      <div class="separate-section">
+        <button type="button" (click)="addSkill()" class="btn btn-primary">Add Skill</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    <div class="separate-section">
+      <pre>{{rFormGroup.value | json}}
+    </pre>
+    </div>
+    <div class="separate-section">
+      <pre>Validation status: {{rFormGroup.valid}}
+    </pre>
+    </div>
+  </div>

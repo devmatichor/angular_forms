@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <h1>Template driven form</h1>
+  </div>
+  <form id="form" #f="ngForm" (ngSubmit)="onFormSubmit(f)" novalidate>
+    <div class="row" ngModelGroup="baseSection" #baseSection="ngModelGroup">
+      <div class="col-md-6 form-group">
+        <label for="exampleInputName">Name</label>
+        <input type="text" class="form-control" id="exampleInputName" placeholder="Name" [(ngModel)]="templateModel.name" name="name"
+          #name="ngModel" required>
+        <small class="text-danger" [hidden]="name?.valid || name?.pristine">Field require</small>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="exampleInputEmail">Email address</label>
+        <input type="text" class="form-control" id="exampleInputEmail" [(ngModel)]="templateModel.email" (change)="onEmailChange($event)"
+          placeholder="Enter email" #email="ngModel" pattern="[^ @]*@[^ @]*" name="email" required>
+        <small class="text-danger" [hidden]="!email.errors?.pattern || email.pristine">It's not correct address format!!</small>
+        <small class="text-danger" [hidden]="!email.errors?.required || email.pristine">Field require</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <label for="exampleInputAccountNo">Account No.</label>
+        <input type="text" class="form-control" id="exampleInputAccountNo" placeholder="Account No" [(ngModel)]="templateModel.accountNo"
+          name="superAccount">
+      </div>
+    </div>
+    <div class="row">
+      <div ngModelGroup="skills" #skills=ngModelGroup class="col-md-12">
+        <div *ngFor="let element of counterList; let i = index;" class="separate-section">
+          <hr>
+          <label for="skill">Skill</label>
+          <input class="form-control" type="text" name="skill[{{i}}]" #skill="ngModel" ngModel placeholder="Skill description" required>
+          <small class="text-danger" [hidden]="skill?.valid || skill?.pristine">Field require</small>
+        </div>
+      </div>
+    </div>
+    <div class="row separate-section">
+      <div class="col-md-12">
+        <button type="button" (click)="addSkill()" class="btn btn-primary">Add skill</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+  <div class="separate-section">
+    <pre>{{f.value | json}}
+    </pre>
+  </div>
+  <div class="separate-section">
+    <pre>Validation status: {{f.valid}}
+    </pre>
+  </div>
+</div>

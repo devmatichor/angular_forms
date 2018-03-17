@@ -1,0 +1,10 @@
+<div class="container">
+  <form id="form" [formGroup]="rFormGroup" (submit)="onSubmit(rFormGroup)">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="exampleInputName">Name</label>
+        <input type="text" class="form-control" id="exampleInputName" placeholder="Name" formControlName="name" name="name">
+      </div>
+....
+  </form>
+</div>
